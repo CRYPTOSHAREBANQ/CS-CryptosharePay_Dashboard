@@ -11,6 +11,7 @@ from django.shortcuts import render, redirect
 
 from utils.decorators import is_logged
 
+from .forms import CreateTransactionDigitalToCryptoForm
 
 
 @is_logged
@@ -19,6 +20,23 @@ def index(request):
 
     return render(request, "home/dashboard.html", context)
 
+@is_logged
+def home(request):
+    context = {'segment': 'index'}
+
+    return render(request, "home/dashboard.html", context)
+
+@is_logged
+def create_payment_link(request):
+    form = CreateTransactionDigitalToCryptoForm(request.POST or None)
+
+    context = {
+        "segment": "payment_links",
+        "form": form
+    }   
+
+    if request.method == "GET":
+        return render(request, "transactions/create_transaction_digital_to_crypto.html", context)
 
 
 @is_logged
@@ -34,6 +52,7 @@ def pages(request):
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
         context['segment'] = load_template
+        print(load_template)
 
         html_template = loader.get_template('home/' + load_template)
         return HttpResponse(html_template.render(context, request))

@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <div class="d-flex justify-content-center w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4" style="text-align: center;">Create Payment Link</h1>
+            <!-- <p class="mb-0">Dozens of reusable components built to provide buttons, alerts, popovers, and more.</p> -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-0 shadow components-section">
+            <div class="card-body">
+                <div class="col-lg-12 col-sm-6">
+
+                    <!-- Form -->
+                    <div class="my-4">
+                        <label for="textarea">Example textarea</label>
+                        {{ form.description }}
+                    </div>
+                    <!-- End of Form -->
+                </div>
+                <!-- <div class="row mb-5 mb-lg-5">
+                    
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

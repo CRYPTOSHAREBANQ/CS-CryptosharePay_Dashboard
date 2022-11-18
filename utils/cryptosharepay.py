@@ -4,11 +4,14 @@ import time
 import os
 
 class CryptoSharePay:
-    def __init__(self):
+    def __init__(self, api_key = None):
         self.BASE = "https://api.cryptosharepay.com/v1"
         self.HEADERS = {
         "Content-Type": "application/json"
         }
+
+        if api_key is not None:
+            self.HEADERS["X-Api-Key"] = api_key
 
     def get_transaction(self, transaction_id):
         url = self.BASE +  f"/protected/transactions/payments/{transaction_id}/"
@@ -21,7 +24,7 @@ class CryptoSharePay:
         url = self.BASE + f"/accounts/request-customer-id/"
 
         headers = {
-            "X-Email": email,
+            "X-Email": email.lower(),
             "X-Password": password
         }
 
@@ -33,7 +36,7 @@ class CryptoSharePay:
         url = self.BASE + f"/accounts/account-customer-id/"
 
         headers = {
-            "X-Email": email,
+            "X-Email": email.lower(),
             "X-Password": password,
             "X-Security-PIN": security_pin
         }
@@ -41,6 +44,42 @@ class CryptoSharePay:
         response = requests.get(url, headers=headers)
 
         return response
+    
+    def create_digital_transaction_digital_to_crypto(self, description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id):
+        url = self.BASE + f"/transactions/payments/create/digital-to-crypto/"
+
+        headers = {
+            "X-Api-key": self.HEADERS["X-Api-Key"]
+        }
+
+        body = {
+            "data": {
+                "description": description,
+                "digital_currency_code": digital_currency_code,
+                "digital_currency_amount": float(digital_currency_amount),
+                "cryptocurrency_code": cryptocurrency_code,
+                "cryptocurrency_blockchain_id": cryptocurrency_blockchain_id
+            }
+        }
+
+        response = requests.post(url, headers = headers, json = body)
+
+        return response
+
+    # def is_valid_address(self, blockchain, network, address):
+    #     url = self.BASE +  f"/blockchain-tools/{blockchain}/{network}/addresses/validate"
+    #     data ={
+    #             "context": "",
+    #             "data": {
+    #                 "item": {
+    #                     "address": f"{address}"
+    #                 }
+    #             }
+    #         }
+
+    #     request = requests.post(url, headers=self.HEADERS, json=data).json()
+        
+    #     return request["data"]["item"]["isValid"]
 
     # def get_token_transaction_details_by_transactionid(self, blockchain, network, transactionHash):
     #     url = self.BASE +  f" /blockchain-data/{blockchain}/{network}/transactions/{transactionHash}/tokens-transfers"
