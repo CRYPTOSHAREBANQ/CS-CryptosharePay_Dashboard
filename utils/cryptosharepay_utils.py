@@ -13,16 +13,29 @@ class CryptoSharePayUtils:
         else:
             return response.json()
 
-
-    def request_account_customer_id(self, email, password):
-        response = self.cryptosharepay_client.request_account_customer_id(email, password)
+    def get_account_customer_id(self, email, password, security_pin):
+        response = self.cryptosharepay_client.get_account_customer_id(email, password, security_pin)
 
         post_response = self.post_process_request(response)
 
         return post_response
-    
-    def get_account_customer_id(self, email, password, security_pin):
-        response = self.cryptosharepay_client.get_account_customer_id(email, password, security_pin)
+
+    def get_digital_currencies(self):
+        response = self.cryptosharepay_client.get_digital_currencies()
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def get_cryptocurrencies(self):
+        response = self.cryptosharepay_client.get_cryptocurrencies()
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def request_account_customer_id(self, email, password):
+        response = self.cryptosharepay_client.request_account_customer_id(email, password)
 
         post_response = self.post_process_request(response)
 

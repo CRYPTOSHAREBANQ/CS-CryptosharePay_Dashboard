@@ -13,10 +13,33 @@ class CryptoSharePay:
         if api_key is not None:
             self.HEADERS["X-Api-Key"] = api_key
 
+    def get_cryptocurrencies(self):
+        url = self.BASE  + f"/cryptocurrency/supported-cryptocurrencies/"
+
+        headers = {
+            "X-Api-key": self.HEADERS["X-Api-Key"]
+        }
+
+        response = requests.get(url, headers = headers)
+
+        return response
+
+    # NOT AVAILABLE YET
+    def get_digital_currencies(self):
+        url = self.BASE + f"/digital-currency/supported-digital-currencies/"
+
+        headers = {
+            "X-Api-key": self.HEADERS["X-Api-Key"]
+        }
+
+        response = requests.get(url, headers = headers)
+
+        return response
+
     def get_transaction(self, transaction_id):
         url = self.BASE +  f"/protected/transactions/payments/{transaction_id}/"
 
-        response = requests.get(url, headers=self.HEADERS).json()
+        response = requests.get(url, headers = self.HEADERS)
 
         return response
 
