@@ -33,7 +33,7 @@
                             {% if success %}
 
                                 <div class="d-grid">
-                                    <a href="{% url 'login' %}" class="btn btn-gray-800">Sign IN</a>
+                                    <a href="{% url 'authentication:login' %}" class="btn btn-gray-800">Sign IN</a>
                                 </div>
 
                             {% else %}
@@ -98,7 +98,7 @@
                                 <div class="d-flex justify-content-center align-items-center mt-4">
                                     <span class="fw-normal">
                                         Already have an account? 
-                                        <a href="{% url 'login' %}" class="fw-bold">Sign IN</a>
+                                        <a href="{% url 'authentication:login' %}" class="fw-bold">Sign IN</a>
                                     </span>
                                 </div>
 

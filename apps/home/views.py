@@ -7,6 +7,7 @@ from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.shortcuts import render, redirect
 
 from utils.decorators import is_logged
 
@@ -16,12 +17,13 @@ from utils.decorators import is_logged
 def index(request):
     context = {'segment': 'index'}
 
-    html_template = loader.get_template('home/index.html')
-    return HttpResponse(html_template.render(context, request))
+    return render(request, "home/dashboard.html", context)
+
 
 
 @is_logged
 def pages(request):
+    print(request.session["customer_id"], request.session["is_logged"])
     context = {}
     # All resource paths end in .html.
     # Pick out the html file name from the url. And load that template.

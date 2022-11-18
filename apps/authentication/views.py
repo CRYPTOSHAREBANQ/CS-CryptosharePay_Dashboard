@@ -32,14 +32,20 @@ def login_view(request):
             # else:
             #     msg = 'Invalid credentials'
             cryptosharepay_utils = CryptoSharePayUtils()
-            print(username, password)
-            response = cryptosharepay_utils.request_customer_id(username, password)
+
+            response = cryptosharepay_utils.request_account_customer_id(username, password)
+
             if response["status"] != "SUCCESS":
                 # messages.info(request, "Invalid credentials")
                 msg = 'Invalid credentials'
             else:
-                login_confirmation_form = LoginConfirmationForm(None)
-                # request.session["is_logged"] = True
+                login_confirmation_form = LoginConfirmationForm(
+                    initial={
+                        "username": username,
+                        "password": password
+                    }
+                )
+
                 return render(request, "accounts/login_confirmation.html", {"form": login_confirmation_form, "msg": msg})
                 # return redirect("/")
 
@@ -59,12 +65,32 @@ def login_confirmation(request):
     msg = None
 
     if form.is_valid():
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
         security_pin = form.cleaned_data.get("security_pin")
-        print(security_pin)
 
-        request.session["is_logged"] = True
-        return redirect("/")
+        cryptosharepay_utils = CryptoSharePayUtils()
+        response = cryptosharepay_utils.get_account_customer_id(username, password, security_pin)
+
+        if response["status"] != "SUCCESS":
+            msg = response["message"]
+
+        else:
+            data = response["data"]
+
+            account_customer_id = data["customer_id"]
+
+            request.session["is_logged"] = True
+            request.session["customer_id"] = account_customer_id
+            
+        return redirect("/dashboard.html")
     
+    return redirect("/")
+    
+def logout(request):
+    del(request.session["is_logged"])
+    return redirect("authentication:login")
+
 
 
 

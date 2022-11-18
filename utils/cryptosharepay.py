@@ -17,7 +17,7 @@ class CryptoSharePay:
 
         return response
 
-    def request_customer_id(self, email, password):
+    def request_account_customer_id(self, email, password):
         url = self.BASE + f"/accounts/request-customer-id/"
 
         headers = {
@@ -28,6 +28,29 @@ class CryptoSharePay:
         response = requests.post(url, headers=headers)
 
         return response
+
+    def get_account_customer_id(self, email, password, security_pin):
+        url = self.BASE + f"/accounts/account-customer-id/"
+
+        headers = {
+            "X-Email": email,
+            "X-Password": password,
+            "X-Security-PIN": security_pin
+        }
+
+        response = requests.get(url, headers=headers)
+
+        return response
+
+    # def get_token_transaction_details_by_transactionid(self, blockchain, network, transactionHash):
+    #     url = self.BASE +  f" /blockchain-data/{blockchain}/{network}/transactions/{transactionHash}/tokens-transfers"
+    #     request = requests.get(url, headers=self.HEADERS).json()
+
+    #     return request["data"]["items"]
+        
+        pass
+
+        # https://api.cryptosharepay.com/v1/accounts/account-customer-id/
 
     # def generate_coins_transaction_from_address(self, blockchain, network, sending_address, recipient_address, amount):
     #     url = self.BASE + f"/wallet-as-a-service/wallets/{self.WALLET_ID}/{blockchain}/{network}/addresses/{sending_address}/transaction-requests"
