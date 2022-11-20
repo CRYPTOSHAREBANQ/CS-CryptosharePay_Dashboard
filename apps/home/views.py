@@ -8,6 +8,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect
+from django.contrib import messages
+
 
 from utils.decorators import is_logged, is_not_logged
 from utils.cryptosharepay_utils import CryptoSharePayUtils
@@ -71,7 +73,18 @@ def create_payment_link(request):
         return render(request, "transactions/create_transaction_digital_to_crypto.html", context)
     
     elif request.method == "POST":
-        pass
+
+        if form.is_valid():
+            # print(form)
+            print(messages)
+
+            pass
+        else:
+            msg = 'Error validating the form'
+            messages.error(request, "Invalid fields")
+
+
+        return redirect("home:payment_links")
 
 
 @is_logged
