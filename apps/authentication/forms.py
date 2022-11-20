@@ -14,13 +14,13 @@ class LoginForm(forms.Form):
                 "class": "form-control"
             }
         ))
-    password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                "placeholder": "Password",
-                "class": "form-control"
-            }
-        ))
+    # password = forms.CharField(
+    #     widget=forms.PasswordInput(
+    #         attrs={
+    #             "placeholder": "Password",
+    #             "class": "form-control"
+    #         }
+    #     ))
     
 class LoginConfirmationForm(forms.Form):
     username = forms.CharField(
@@ -30,26 +30,36 @@ class LoginConfirmationForm(forms.Form):
                 "class": "form-control"
             }
         ))
-    password = forms.CharField(
+
+    # password = forms.CharField(
+    #     widget=forms.PasswordInput(
+    #         attrs={
+    #             "placeholder": "Password",
+    #             "class": "form-control"
+    #         }
+    #     ))
+
+    # security_pin = forms.CharField(
+    #     widget=forms.PasswordInput(
+    #         attrs={
+    #             "placeholder": "Security Pin",
+    #             "class": "form-control"
+    #         }
+    #     ))
+
+    security_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Security Password",
+                "class": "form-control"
+            }
+        ))
+
+class BussinessSelectForm(forms.Form):
+    selected_business = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Password",
-                "class": "form-control"
-            }
-        ))
-
-    password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                "placeholder": "Password",
-                "class": "form-control"
-            }
-        ))
-
-    security_pin = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                "placeholder": "Security Pin",
+                "placeholder": "Business",
                 "class": "form-control"
             }
         ))

@@ -17,7 +17,7 @@ class CreateTransactionDigitalToCryptoForm(forms.Form):
     )
 
     digital_currency_code = forms.CharField(
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
                 "placeholder": "Digital Currency Code",
                 "class": "form-control"
@@ -26,13 +26,11 @@ class CreateTransactionDigitalToCryptoForm(forms.Form):
     )
 
     digital_currency_amount = forms.FloatField(
-        widget = forms.DecimalField(
-            # attrs={
-            #     "placeholder": "Digital Currency Amount",
-            #     "class": "form-control"
-            # },
-            max_digits=14, 
-            decimal_places=2
+        widget = forms.NumberInput(
+            attrs={
+                "placeholder": "Digital Currency Amount",
+                "class": "form-control"
+            },
         )
     )
 
@@ -53,6 +51,16 @@ class CreateTransactionDigitalToCryptoForm(forms.Form):
             }
         ),
     )
+
+    withdrawal_address = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+                "placeholder": "Withdrawal Address",
+                "class": "form-control"
+            }
+        ),
+    )
+    
     
 
     

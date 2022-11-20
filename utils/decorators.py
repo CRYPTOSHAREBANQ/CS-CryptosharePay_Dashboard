@@ -2,15 +2,33 @@ from django.contrib.auth.decorators import user_passes_test
 from functools import wraps
 from django.http import HttpResponseRedirect
 
+
 def is_logged(function):
   @wraps(function)
   def wrap(request, *args, **kwargs):
 
-        # request.session['wallet_conn'] = True
-        if "is_logged" in request.session:
-             return function(request, *args, **kwargs)
+    # request.session['wallet_conn'] = True
+    if "is_logged" in request.session:
+
+        if "active_business" in request.session:
+          return function(request, *args, **kwargs)
+
         else:
-            return HttpResponseRedirect('/login/')
+          return HttpResponseRedirect('/select-business')
+        return function(request, *args, **kwargs)
+    else:
+        return HttpResponseRedirect('/login/')
+  return wrap
+
+def is_not_logged(function):
+  @wraps(function)
+  def wrap(request, *args, **kwargs):
+    # request.session['wallet_conn'] = True
+    if "is_logged" in request.session:
+      return HttpResponseRedirect('/')
+    else:
+      return function(request, *args, **kwargs)
+
 
   return wrap
 

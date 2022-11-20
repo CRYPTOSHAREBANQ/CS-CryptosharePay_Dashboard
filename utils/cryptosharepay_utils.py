@@ -34,8 +34,43 @@ class CryptoSharePayUtils:
 
         return post_response
 
+    def get_blockchains(self):
+        response = self.cryptosharepay_client.get_blockchains()
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def get_businesses(self, email, customer_id):
+        response = self.cryptosharepay_client.get_businesses(email, customer_id)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
     def request_account_customer_id(self, email, password):
         response = self.cryptosharepay_client.request_account_customer_id(email, password)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def request_login_dashboard(self, email):
+        response = self.cryptosharepay_client.request_login_dashboard(email)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def login_dashboard(self, email, security_password):
+        response = self.cryptosharepay_client.login_dashboard(email, security_password)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def get_api_key_by_business_id(self, customer_id, email, business_id):
+        response = self.cryptosharepay_client.get_api_key_by_business_id(customer_id, email, business_id)
 
         post_response = self.post_process_request(response)
 

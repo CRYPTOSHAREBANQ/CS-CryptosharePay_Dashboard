@@ -24,7 +24,6 @@
                                 
                     {% csrf_token %}
                     <div class="col-lg-12 col-sm-6">
-
                         <!-- Form -->
                         <div class="my-4">
                             <label for="textarea">Transaction Description</label>
@@ -33,14 +32,55 @@
                         <!-- End of Form -->
                     </div>
                     <div class="mb-4">
-                        <label class="my-1 me-2" for="digital_currency_code">Digital Currency Code</label>
-                        <select class="form-select" id="digital_currency_code" aria-label="Digital Currency Code">
-                            <option selected disabled>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <label class="my-1 me-2" for="digital_currency_code">Digital Currency</label>
+                        <select class="form-select" id="digital_currency_code" aria-label="Digital Currency" name="digital_currency_code">
+                            <option selected disabled>Open this menu</option>
+                            {% for digital_currency in digital_currencies %}
+                                <option value="{{ digital_currency.code }}">{{ digital_currency.code }} | {{ digital_currency.name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
+                    <div class="col-lg-12 col-sm-6">
+                        <!-- Form -->
+                        <div class="my-4">
+                            <label for="textarea">Transaction Amount</label>
+                            {{ form.digital_currency_amount }}
+                        </div>
+                        <!-- End of Form -->
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="my-1 me-2" for="cryptocurrency_code">Cryptocurrency</label>
+                        <select class="form-select" id="cryptocurrency_code" aria-label="Cryptocurrency" name="cryptocurrency_code">
+                            <option selected disabled>Open this menu</option>
+                            {% for cryptocurrency in cryptocurrencies %}
+                                <option value="{{ cryptocurrency.code }}">{{ cryptocurrency.code }} | {{ cryptocurrency.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="my-1 me-2" for="cryptocurrency_blockchain_id">Blockchain</label>
+                        <select class="form-select" id="cryptocurrency_blockchain_id" aria-label="Blockchain" name="cryptocurrency_blockchain_id">
+                            <option selected disabled>Open this menu</option>
+                            {% for blockchain in blockchains %}
+                                <option value="{{ blockchain.blockchain_id }}">{{ blockchain.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12 col-sm-6">
+                        <!-- Form -->
+                        <div class="my-4">
+                            <label for="textarea">Withdrawal Address</label>
+                            {{ form.withdrawal_address }}
+                        </div>
+                        <!-- End of Form -->
+                    </div>
+
+
+
+
 
                     <div class="d-grid">
                         <button type="submit" name="login" class="btn btn-gray-800">Create Payment Link</button>

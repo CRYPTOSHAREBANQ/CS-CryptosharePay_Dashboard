@@ -12,5 +12,6 @@ app_name = "authentication"
 urlpatterns = [
     path('login/', login_view, name="login"),
     path("login-confirmation/", login_confirmation, name="login_confirmation"),
+    path("select-business", select_business, name="select_business"),
     path("logout/", logout, name="logout"),
 ]

@@ -20,7 +20,7 @@ class CryptoSharePay:
             "X-Api-key": self.HEADERS["X-Api-Key"]
         }
 
-        response = requests.get(url, headers = headers)
+        response = requests.get(url, headers = self.HEADERS)
 
         return response
 
@@ -32,7 +32,7 @@ class CryptoSharePay:
             "X-Api-key": self.HEADERS["X-Api-Key"]
         }
 
-        response = requests.get(url, headers = headers)
+        response = requests.get(url, headers = self.HEADERS)
 
         return response
 
@@ -43,6 +43,27 @@ class CryptoSharePay:
 
         return response
 
+    def get_blockchains(self):
+        url = self.BASE + f"/cryptocurrency/supported-blockchains/"
+
+        response = requests.get(url, headers = self.HEADERS)
+
+        return response
+
+    def get_businesses(self, email, customer_id):
+        url = self.BASE + f"/businesses/all/"
+
+        headers = {
+            "X-Email": email.lower(),
+            "X-Customer-Id": customer_id
+        }
+
+        response = requests.get(url, headers=headers)
+
+        return response
+
+    # def get_api_key
+
     def request_account_customer_id(self, email, password):
         url = self.BASE + f"/accounts/request-customer-id/"
 
@@ -52,6 +73,42 @@ class CryptoSharePay:
         }
 
         response = requests.post(url, headers=headers)
+
+        return response
+
+    def request_login_dashboard(self, email):
+        url = self.BASE + f"/protected/accounts/request-login-dashboard/"
+
+        headers = {
+            "X-Email": email.lower()
+        }
+
+        response = requests.post(url, headers=headers)
+
+        return response
+
+    def login_dashboard(self, email, security_password):
+        url = self.BASE + f"/protected/accounts/login-dashboard/"
+
+        headers = {
+            "X-Email": email.lower(),
+            "X-Security-Password": security_password
+        }
+
+        response = requests.get(url, headers=headers)
+
+        return response
+
+    def get_api_key_by_business_id(self, customer_id, email, business_id):
+        url = self.BASE + f"/api-keys/get-by-business-id/?type=PRODUCTION"
+
+        headers = {
+            "X-Customer-Id": customer_id,
+            "X-Email": email.lower(),
+            "X-Business-Id": business_id
+        }
+
+        response = requests.get(url, headers=headers)
 
         return response
 
