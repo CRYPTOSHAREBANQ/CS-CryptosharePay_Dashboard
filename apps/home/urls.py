@@ -11,7 +11,7 @@ app_name = "home"
 urlpatterns = [
 
     # The home page
-    path('', views.home, name='home'),
+    # path('', views.home, name='home'),
 
     path("payment-links/", views.create_payment_link, name="payment_links"),
 

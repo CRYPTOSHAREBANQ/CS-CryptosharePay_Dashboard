@@ -20,8 +20,17 @@
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                             <div class="text-center text-md-center mb-4 mt-md-0">
-                                <h1 class="mb-0 h3">Create Account </h1>
+                                <h1 class="mb-0 h3">Create Business Account </h1>
                             </div>
+
+                            <!-- 
+                            -Email Address
+                            -country (same country list from cryptosharecredit)
+                            -Date of Birth
+                            -Full Legal Name
+                            -Picture of Country ID or Drivers License 
+                            -->
+
                             <form action="#" class="mt-4">
                                 <!-- Form -->
                                 <div class="form-group mb-4">
@@ -32,6 +41,28 @@
                                         </span>
                                         <input type="email" class="form-control" placeholder="example@company.com" id="email" autofocus required>
                                     </div>  
+                                </div>
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="birthday">Birthday</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                            </span>
+                                            <input data-datepicker="" class="form-control" id="birthday" type="text" placeholder="dd/mm/yyyy" required>                                               
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label class="my-1 me-2" for="country">Country</label>
+                                        <select class="form-select" id="country" aria-label="Country" name="country">
+                                            <option selected disabled>Open this menu</option>
+                                            {% for country in countries %}
+                                                <option value="{{ country.code }}">{{ country.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
                                 <!-- End of Form -->
                                 <div class="form-group">

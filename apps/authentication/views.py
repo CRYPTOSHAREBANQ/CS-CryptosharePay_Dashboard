@@ -17,6 +17,17 @@ from core.settings import GITHUB_AUTH
 
 from utils.decorators import is_logged, is_not_logged
 
+
+def index(request):
+    context = {'segment': 'index'}
+
+    return render(request, "index/home.html", context)
+
+def signup_business(request):
+    pass
+
+    return render(request, "accounts/signup_business.html")
+
 @is_not_logged
 def login_view(request):
     form = LoginForm(request.POST or None)
