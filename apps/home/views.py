@@ -30,6 +30,11 @@ def home(request):
 
     return render(request, "home/dashboard.html", context)
 
+def text_index(request):
+    context = {'segment': 'index'}
+
+    return render(request, "home/index.html", context)
+
 @is_logged
 def create_payment_link(request):
     form = CreateTransactionDigitalToCryptoForm(request.POST or None)
@@ -86,6 +91,16 @@ def create_payment_link(request):
 
         return redirect("home:payment_links")
 
+@is_logged
+def create_withdrawal(request):
+    form = CreateTransactionDigitalToCryptoForm(request.POST or None)
+
+    context = {
+        "segment": "withdrawals",
+        "form": form,
+    }   
+
+    return render(request, "transactions/create_transaction_withdrawal.html", context)
 
 @is_logged
 def pages(request):

@@ -28,6 +28,11 @@ def signup_business(request):
 
     return render(request, "accounts/signup_business.html")
 
+def signup_individual(request):
+    pass
+
+    return render(request, "accounts/signup_individual.html")
+
 @is_not_logged
 def login_view(request):
     form = LoginForm(request.POST or None)
