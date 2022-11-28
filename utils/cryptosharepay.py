@@ -36,8 +36,15 @@ class CryptoSharePay:
 
         return response
 
-    def get_transaction(self, transaction_id):
-        url = self.BASE +  f"/protected/transactions/payments/{transaction_id}/"
+    def get_payment_transaction(self, transaction_id):
+        url = self.BASE +  f"/transactions/payments/{transaction_id}/"
+
+        response = requests.get(url, headers = self.HEADERS)
+
+        return response
+
+    def get_all_payment_transactions(self):
+        url = self.BASE + f"/transactions/payments/all/"
 
         response = requests.get(url, headers = self.HEADERS)
 
@@ -125,7 +132,7 @@ class CryptoSharePay:
 
         return response
     
-    def create_digital_transaction_digital_to_crypto(self, description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id):
+    def create_digital_transaction_digital_to_crypto(self, description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id, withdrawal_address):
         url = self.BASE + f"/transactions/payments/create/digital-to-crypto/"
 
         headers = {
@@ -138,11 +145,29 @@ class CryptoSharePay:
                 "digital_currency_code": digital_currency_code,
                 "digital_currency_amount": float(digital_currency_amount),
                 "cryptocurrency_code": cryptocurrency_code,
-                "cryptocurrency_blockchain_id": cryptocurrency_blockchain_id
+                "cryptocurrency_blockchain_id": cryptocurrency_blockchain_id,
+                "withdrawal_address": withdrawal_address
             }
         }
 
         response = requests.post(url, headers = headers, json = body)
+
+        return response
+
+    def create_crypto_withdrawal(self, cryptocurrency_code, cryptocurrency_blockchain_id, withdrawal_address, amount, extra_data):
+        url = self.BASE + f"/transactions/withdrawals/create/"
+
+        body = {
+            "data": {
+                "cryptocurrency_code": cryptocurrency_code,
+                "cryptocurrency_blockchain_id": cryptocurrency_blockchain_id,
+                "cryptocurrency_amount": float(amount),
+                "withdrawal_address": withdrawal_address,
+                "extra_data": extra_data
+            }
+        }
+        
+        response = requests.post(url, headers = self.HEADERS, json = body)
 
         return response
 

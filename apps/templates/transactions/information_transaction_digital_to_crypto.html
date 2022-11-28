@@ -1,0 +1,97 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <div class="d-flex justify-content-center w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4" style="text-align: center;">Payment Link Information</h1>
+            <!-- <p class="mb-0">Dozens of reusable components built to provide buttons, alerts, popovers, and more.</p> -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-0 shadow components-section">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="transaction_id">Transaction ID</label>
+                        <input type="text" class="form-control" id="transaction_id" aria-describedby="transaction_id" placeholder="If you see this, please contact it to support" value="{{ transaction.transaction_id }}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="transaction_status">Transaction Status</label>
+                        <br>
+                        {% if transaction.status == "EXPIRED" %}
+                            <span class="badge badge-lg bg-secondary">{{ transaction.status }}</span>
+                        {% elif transaction.status == "WAITING_FOR_DEPOSIT" %}
+                            <span class="badge badge-lg bg-info">WAITING FOR DEPOSIT</span>
+                        {% elif transaction.status == "COMPLETED" %}
+                            <span class="badge badge-lg bg-success">{{ transaction.status }}</span>
+                        {% elif transaction.status == "CANCELLED" %}
+                            <span class="badge badge-lg bg-danger">{{ transaction.status }}</span>
+                        {% else %}
+                            <span class="badge badge-lg bg-primary">UNKNOWN</span>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="textarea">Description</label>
+                        <textarea class="form-control" placeholder="If you see this, please contact support" id="textarea" rows="4" disabled>{{ transaction.description }}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="cryptocurrency_code">Cryptocurrency</label>
+                        <input type="text" class="form-control" id="cryptocurrency_code" aria-describedby="cryptocurrency_code" placeholder="If you see this, please contact it to support" value="{{ transaction.cryptocurrency_code }}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="cryptocurrency_amount">Cryptocurrency Amount</label>
+                        <input type="number" class="form-control" id="cryptocurrency_amount" aria-describedby="cryptocurrency_amount" placeholder="If you see this, please contact it to support" value="{{ transaction.cryptocurrency_amount }}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="cryptocurrency_amount_received">Cryptocurrency Amount Received</label>
+                        <input type="number" class="form-control" id="cryptocurrency_amount_received" aria-describedby="cryptocurrency_amount_received" placeholder="If you see this, please contact it to support" value="{{ transaction.cryptocurrency_amount_received }}" disabled>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <div class="mb-4">
+                        <label for="blockchain">Blockchain</label>
+                        <input type="text" class="form-control" id="blockchain" aria-describedby="blockchain" placeholder="If you see this, please contact it to support" value="">
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="deposit_address">Deposit Address</label>
+                        <input type="text" class="form-control" id="deposit_address" aria-describedby="deposit_address" placeholder="If you see this, please contact it to support" value="{{ transaction.address }}" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,70 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="py-4">
+        <a href="{% url 'home:create_payment_link' %}" class="btn btn-primary">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            New Payment Link
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-12 col-xl-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col justify-content-center">
+                                    <h2 class="fs-5 fw-bold mb-0">Payment Links</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="border-bottom" scope="col">ID</th>
+                                    <th class="border-bottom" scope="col">Description</th>
+                                    <th class="border-bottom" scope="col">Cryptocurrency</th>
+                                    <th class="border-bottom" scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <th class="text-gray-900" scope="row">
+                                        {{ transaction.transaction_id }}
+                                    </th>
+                                    <td class="fw-bolder text-gray-500">
+                                        {{ transaction.description }}
+                                    </td>
+                                    <td class="fw-bolder text-gray-500">
+                                        {{ transaction.cryptocurrency_code }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'home:payment_link_information' transaction_id=transaction.transaction_id %}" class="btn btn-primary">See More</a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

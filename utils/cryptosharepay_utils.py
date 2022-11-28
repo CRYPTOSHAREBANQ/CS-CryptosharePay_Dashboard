@@ -76,8 +76,29 @@ class CryptoSharePayUtils:
 
         return post_response
 
-    def create_digital_transaction_digital_to_crypto(self, description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id):
-        response = self.cryptosharepay_client.create_digital_transaction_digital_to_crypto(description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id)
+    def get_all_payment_transactions(self):
+        response = self.cryptosharepay_client.get_all_payment_transactions()
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+    
+    def get_payment_transaction(self, transaction_id):
+        response = self.cryptosharepay_client.get_payment_transaction(transaction_id)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def create_digital_transaction_digital_to_crypto(self, description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id, withdrawal_address):
+        response = self.cryptosharepay_client.create_digital_transaction_digital_to_crypto(description, digital_currency_code, digital_currency_amount, cryptocurrency_code, cryptocurrency_blockchain_id, withdrawal_address)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
+    def create_transaction_crypto_withdrawal(self, cryptocurrency_code, cryptocurrency_blockchain_id, withdrawal_address, amount, extra_data = None):
+        response = self.cryptosharepay_client.create_crypto_withdrawal(cryptocurrency_code, cryptocurrency_blockchain_id, withdrawal_address, amount, extra_data)
 
         post_response = self.post_process_request(response)
 

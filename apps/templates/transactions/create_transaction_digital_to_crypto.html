@@ -54,12 +54,12 @@
                         <select class="form-select" id="cryptocurrency_code" aria-label="Cryptocurrency" name="cryptocurrency_code">
                             <option selected disabled>Open this menu</option>
                             {% for cryptocurrency in cryptocurrencies %}
-                                <option value="{{ cryptocurrency.code }}">{{ cryptocurrency.code }} | {{ cryptocurrency.name }}</option>
+                                <option value="{{ cryptocurrency.code }}">{{ cryptocurrency.code }} | {{ cryptocurrency.name }} in {{cryptocurrency.blockchain}}</option>
                             {% endfor %}
                         </select>
                     </div>
 
-                    <div class="mb-4">
+                    <!-- <div class="mb-4">
                         <label class="my-1 me-2" for="cryptocurrency_blockchain_id">Blockchain</label>
                         <select class="form-select" id="cryptocurrency_blockchain_id" aria-label="Blockchain" name="cryptocurrency_blockchain_id">
                             <option selected disabled>Open this menu</option>
@@ -67,7 +67,7 @@
                                 <option value="{{ blockchain.blockchain_id }}">{{ blockchain.name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-12 col-sm-6">
                         <!-- Form -->

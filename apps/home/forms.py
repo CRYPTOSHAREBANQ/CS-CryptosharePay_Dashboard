@@ -43,14 +43,14 @@ class CreateTransactionDigitalToCryptoForm(forms.Form):
         ),
     )
 
-    cryptocurrency_blockchain_id = forms.CharField(
-        widget = forms.TextInput(
-            attrs={
-                "placeholder": "Cryptocurrency Blockchain ID",
-                "class": "form-control"
-            }
-        ),
-    )
+    # cryptocurrency_blockchain_id = forms.CharField(
+    #     widget = forms.TextInput(
+    #         attrs={
+    #             "placeholder": "Cryptocurrency Blockchain ID",
+    #             "class": "form-control"
+    #         }
+    #     ),
+    # )
 
     withdrawal_address = forms.CharField(
         widget = forms.TextInput(
@@ -61,7 +61,44 @@ class CreateTransactionDigitalToCryptoForm(forms.Form):
         ),
     )
     
-    
+
+class CreateWithdrawal(forms.Form):
+    cryptocurrency_code = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Cryptocurrency Code",
+                "class": "form-control"
+            }
+        ),
+    )
+
+    cryptocurrency_amount = forms.FloatField(
+        widget = forms.NumberInput(
+            attrs={
+                "placeholder": "Cryptocurrency Amount",
+                "class": "form-control"
+            },
+        )
+    )
+
+    receiver_address = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+                "placeholder": "Withdrawal Address",
+                "class": "form-control"
+            }
+        ),
+    )
+
+    extra_data = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+                "placeholder": "Extra data (like XRP tag) [OPTIONAL]",
+                "class": "form-control"
+            }
+        ),
+        blank = True
+    )
 
     
 # class LoginConfirmationForm(forms.Form):

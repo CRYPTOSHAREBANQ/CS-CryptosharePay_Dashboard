@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <div class="d-flex justify-content-center w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4" style="text-align: center;">Payment Sent</h1>
+            <!-- <p class="mb-0">Dozens of reusable components built to provide buttons, alerts, popovers, and more.</p> -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-0 shadow components-section">
+            <div class="card-body">
+                
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="transaction_id">Transaction ID</label>
+                        <input type="text" class="form-control" id="transaction_id" aria-describedby="transaction_id" placeholder="If you see this, please contact it to support" value="{{ transaction.transaction_id }}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="cryptocurrency_code">Cryptocurrency</label>
+                        <input type="text" class="form-control" id="cryptocurrency_code" aria-describedby="cryptocurrency_code" placeholder="If you see this, please contact it to support" value="{{ transaction.cryptocurrency_code }}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="mb-4">
+                        <label for="cryptocurrency_amount">Cryptocurrency Amount</label>
+                        <input type="number" class="form-control" id="cryptocurrency_amount" aria-describedby="cryptocurrency_amount" placeholder="If you see this, please contact it to support" value="{{ transaction.cryptocurrency_amount }}" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

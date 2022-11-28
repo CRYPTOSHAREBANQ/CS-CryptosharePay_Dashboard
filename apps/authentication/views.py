@@ -23,11 +23,13 @@ def index(request):
 
     return render(request, "index/home.html", context)
 
+@is_not_logged
 def signup_business(request):
     pass
 
     return render(request, "accounts/signup_business.html")
 
+@is_not_logged
 def signup_individual(request):
     pass
 

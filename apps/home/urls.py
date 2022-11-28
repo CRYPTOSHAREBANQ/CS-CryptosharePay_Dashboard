@@ -13,7 +13,12 @@ urlpatterns = [
     # The home page
     # path('', views.home, name='home'),
     path("test-index/", views.text_index, name="test_index"),
-    path("payment-links/", views.create_payment_link, name="payment_links"),
+    path("payment-links/", views.payment_links, name="payment_links"),
+    path("payment-links/create/", views.create_payment_link, name="create_payment_link"),
+    path("payment-links/information/<str:transaction_id>", views.payment_link_information, name="payment_link_information"),
+
+    path("send-payment/", views.create_withdrawal, name="send_payment"),
+
     path("withdrawals/", views.create_withdrawal, name="withdrawals"),
 
     # Matches any html file

@@ -4,34 +4,43 @@ from django.http import HttpResponseRedirect
 
 
 def is_logged(function):
-  @wraps(function)
-  def wrap(request, *args, **kwargs):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
 
-    # request.session['wallet_conn'] = True
-    if "is_logged" in request.session:
+        # request.session['wallet_conn'] = True
+        if "is_logged" in request.session:
 
-        if "active_business" in request.session:
-          return function(request, *args, **kwargs)
+            if "customer_id" not in request.session:
+                return HttpResponseRedirect("/login/")
+            
+            if "account_email" not in request.session:
+                return HttpResponseRedirect("/login/")
 
+            if "businesses" not in request.session:
+                return HttpResponseRedirect('/select-business')
+
+            if "active_business" not in request.session:
+                return HttpResponseRedirect('/select-business')
+
+            if "active_api_key" not in request.session:
+                return HttpResponseRedirect("/login/")
+
+            return function(request, *args, **kwargs)
         else:
-          return HttpResponseRedirect('/select-business')
-        return function(request, *args, **kwargs)
-    else:
-        return HttpResponseRedirect('/login/')
-  return wrap
+            return HttpResponseRedirect('/login/')
+    return wrap
+
 
 def is_not_logged(function):
-  @wraps(function)
-  def wrap(request, *args, **kwargs):
-    # request.session['wallet_conn'] = True
-    if "is_logged" in request.session:
-      return HttpResponseRedirect('/')
-    else:
-      return function(request, *args, **kwargs)
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        # request.session['wallet_conn'] = True
+        if "is_logged" in request.session:
+            return HttpResponseRedirect('/payment-links/')
+        else:
+            return function(request, *args, **kwargs)
 
-
-  return wrap
-
+    return wrap
 
 
 # def membership_required(fn=None):

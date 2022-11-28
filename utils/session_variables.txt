@@ -1,0 +1,8 @@
+SESSION VARIABLES:
+
+
+customer_id
+account_email
+businesses
+active_business
+active_api_key
