@@ -91,13 +91,14 @@ class CreateWithdrawal(forms.Form):
     )
 
     extra_data = forms.CharField(
+        required=False,
         widget = forms.TextInput(
             attrs={
                 "placeholder": "Extra data (like XRP tag) [OPTIONAL]",
                 "class": "form-control"
             }
-        ),
-        blank = True
+        )
+        
     )
 
     
