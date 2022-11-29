@@ -35,8 +35,15 @@
                                 <!-- Form -->
                                 <div class="form-group">
                                     <div class="mb-4">
-                                        <label for="legal_name">Full legal name</label>
-                                        <input type="text" class="form-control" id="legal_name" aria-describedby="legal_name" placeholder="Your full legal name">
+                                        <label for="first_name">First name</label>
+                                        <input type="text" class="form-control" id="first_name" aria-describedby="first_name" placeholder="Your first legal name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="last_name">Last name</label>
+                                        <input type="text" class="form-control" id="last_name" aria-describedby="last_name" placeholder="Your last legal name">
                                     </div>
                                 </div>
 
@@ -44,6 +51,13 @@
                                     <div class="mb-4">
                                         <label for="business_name">Business name</label>
                                         <input type="text" class="form-control" id="business_name" aria-describedby="business_name" placeholder="Your business name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="business_description">Business description</label>
+                                        <input type="text" class="form-control" id="business_description" aria-describedby="business_description" placeholder="Your business description">
                                     </div>
                                 </div>
 
@@ -59,8 +73,8 @@
 
                                 <div class="form-group">
                                     <div class="mb-4">
-                                        <label class="my-1 me-2" for="country">Country</label>
-                                        <select class="form-select" id="country" aria-label="Country" name="country">
+                                        <label class="my-1 me-2" for="country_id">Country</label>
+                                        <select class="form-select" id="country_id" aria-label="Country" name="country_id">
                                             <option selected disabled>Open this menu</option>
                                             {% for country in countries %}
                                                 <option value="{{ country.code }}">{{ country.name }}</option>
@@ -81,15 +95,13 @@
                                     </div>
                                 </div>
                                 
-
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="mb-4">
-                                        <label for="country_id" class="form-label">Please upload your country ID</label>
-                                        <input name="country_id" class="form-control" type="file" id="country_id">
+                                        <label for="country_document" class="form-label">Please upload your country ID</label>
+                                        <input name="country_document" class="form-control" type="file" id="country_document">
                                     </div>
+                                </div> -->
 
-                                </div>
-                                <!-- End of Form -->
                                 <div class="form-group">
                                     <!-- Form -->
                                     <div class="form-group mb-4">
@@ -98,7 +110,7 @@
                                             <span class="input-group-text" id="basic-addon2">
                                                 <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                                             </span>
-                                            <input type="password" placeholder="Password" class="form-control" id="password" required>
+                                            <input type="password" placeholder="Password" class="form-control" id="password" name="password" required>
                                         </div>  
                                     </div>
                                     <!-- End of Form -->

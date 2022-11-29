@@ -36,7 +36,7 @@ def is_not_logged(function):
     def wrap(request, *args, **kwargs):
         # request.session['wallet_conn'] = True
         if "is_logged" in request.session:
-            return HttpResponseRedirect('/payment-links/')
+            return HttpResponseRedirect('/dashboard/')
         else:
             return function(request, *args, **kwargs)
 

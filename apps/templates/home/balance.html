@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Balance {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 col-xl-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col justify-content-center">
+                                    <h2 class="fs-5 fw-bold mb-0">Assets</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="border-bottom" scope="col">Cryptocurrency</th>
+                                    <th class="border-bottom" scope="col">Balance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for asset in assets %}
+                                <tr>
+                                    <th class="text-gray-900" scope="row">
+                                        {{ asset.cryptocurrency }}
+                                    </th>
+                                    <td class="fw-bolder text-gray-500">
+                                        {{ asset.amount }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                {% if not assets %}
+                                <tr>
+                                    <td colspan="2" class="text-center">
+                                        <p class="text-muted">You don't have any assets yet.</p>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

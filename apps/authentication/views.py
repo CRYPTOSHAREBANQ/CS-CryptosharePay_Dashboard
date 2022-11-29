@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import LoginForm, LoginConfirmationForm, BussinessSelectForm
+from .forms import LoginForm, LoginConfirmationForm, BussinessSelectForm, BusinessSignupForm
 from django.http import HttpResponse
 from django.template import loader
 
@@ -25,6 +25,24 @@ def index(request):
 
 @is_not_logged
 def signup_business(request):
+    form = BusinessSignupForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            confirm_password = form.cleaned_data.get('confirm_password')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            country_id = form.cleaned_data.get('country_id')
+            business_name = form.cleaned_data.get('business_name')
+            business_description = form.cleaned_data.get('business_description')
+            business_document = form.cleaned_data.get('business_document')
+
+            cryptosharepay_utils = CryptoSharePayUtils()
+            
+        else:
+            messages.error(request, 'Please correct the error below.')
     pass
 
     return render(request, "accounts/signup_business.html")

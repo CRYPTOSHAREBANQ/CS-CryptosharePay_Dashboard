@@ -170,6 +170,13 @@ class CryptoSharePay:
         response = requests.post(url, headers = self.HEADERS, json = body)
 
         return response
+    
+    def get_assets(self):
+        url = self.BASE + f"/assets/all/"
+        
+        response = requests.get(url, headers=self.HEADERS)
+
+        return response
 
     # def is_valid_address(self, blockchain, network, address):
     #     url = self.BASE +  f"/blockchain-tools/{blockchain}/{network}/addresses/validate"

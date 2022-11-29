@@ -48,6 +48,13 @@ class CryptoSharePayUtils:
 
         return post_response
 
+    def get_assets(self):
+        response = self.cryptosharepay_client.get_assets()
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+
     def request_account_customer_id(self, email, password):
         response = self.cryptosharepay_client.request_account_customer_id(email, password)
 

@@ -30,6 +30,26 @@ def home(request):
 
     return render(request, "home/dashboard.html", context)
 
+@is_logged
+def balance(request):
+    context = {
+        "segment": "balance",
+        "assets": []
+        }
+
+    cryptosharepay_utils = CryptoSharePayUtils(api_key = "tsk_b67044466d5bb5dbc6c05f794a3f4ad2")
+
+    assets_response = cryptosharepay_utils.get_assets()
+    if assets_response["status"] != "SUCCESS":
+        html_template = loader.get_template('home/page-500.html')
+        return HttpResponse(html_template.render(context, request))
+
+    response_data = assets_response["data"]
+
+    context["assets"] = response_data["assets"]
+
+    return render(request, "home/balance.html", context)
+
 def text_index(request):
     context = {'segment': 'index'}
 
