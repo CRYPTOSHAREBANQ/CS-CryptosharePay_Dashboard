@@ -37,7 +37,7 @@ def balance(request):
         "assets": []
         }
 
-    cryptosharepay_utils = CryptoSharePayUtils(api_key = "tsk_b67044466d5bb5dbc6c05f794a3f4ad2")
+    cryptosharepay_utils = CryptoSharePayUtils(api_key = request.session["active_api_key"])
 
     assets_response = cryptosharepay_utils.get_assets()
     if assets_response["status"] != "SUCCESS":
