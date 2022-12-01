@@ -19,6 +19,10 @@ from utils.decorators import is_logged, is_not_logged, is_logged_business
 
 from utils.constants.cryptosharepay_constants import SUPPORTED_COUNTRIES_LIST
 
+from utils.general.s3_manager import S3Manager
+
+from datetime import datetime
+
 def index(request):
     context = {'segment': 'index'}
 
@@ -43,13 +47,15 @@ def signup_business(request):
             country_id = form.cleaned_data.get('country_id')
             business_name = form.cleaned_data.get('business_name')
             business_description = form.cleaned_data.get('business_description')
-            # business_document = form.cleaned_data.get('business_document')
 
+            birthdate = form.cleaned_data.get('birthdate')
+            # business_document = form.cleaned_data.get('business_document')
+            
             print("TEST")
             # return render(request, "accounts/signup_business.html", context)
 
             cryptosharepay_utils = CryptoSharePayUtils()
-            account_creation_response = cryptosharepay_utils.create_account_business(email, password, confirm_password, first_name, last_name, country_id, business_name, business_description)
+            account_creation_response = cryptosharepay_utils.create_account_business(email, password, confirm_password, first_name, last_name, country_id, birthdate, business_name, business_description)
             print(account_creation_response)
 
             if account_creation_response['status'] != 'SUCCESS':
@@ -60,6 +66,7 @@ def signup_business(request):
             messages.success(request, 'Account created successfully')
             return redirect('authentication:login')
         else:
+            print("ERROR")
             messages.error(request, 'Please correct the error below.')
 
     return render(request, "accounts/signup_business.html", context)
@@ -211,15 +218,20 @@ def upload_country_document(request):
         if form.is_valid():
             pass
             
-            document_front = form.cleaned_data.get("document_front")
-            document_back = form.cleaned_data.get("document_back")
+            document_front_name = form.cleaned_data.get("document_front")
+            document_front_name_content = request.FILES["document_front"]
 
-            print("FRONT")
-            print(request.FILES["document_front"])
-            print(document_front)
+            document_back_name = form.cleaned_data.get("document_back")
+            document_back_name_content = request.FILES["document_back"]
 
-            print("BACK")
-            print(document_back)
+            s3_manager = S3Manager()
+            s3_manager.upload_object_file_to_bucket("cryptosharepay-accounts", f"{request.session['customer_id']}_country_front.png", document_front_name_content, f"country-documents/{request.session['customer_id']}")
+            s3_manager.upload_object_file_to_bucket("cryptosharepay-accounts", f"{request.session['customer_id']}_country_back.png", document_back_name_content, f"country-documents/{request.session['customer_id']}")
+
+            print("READY?")
+
+            # upload_file_to_bucket(self, bucket, file_path, destination_path)
+
         else:
             print("ERROR")
             print(form.errors)

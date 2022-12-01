@@ -137,7 +137,7 @@ class BusinessSignupForm(forms.Form):
         )
     )
 
-    birthday = forms.CharField(
+    birthdate = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Your birthday",

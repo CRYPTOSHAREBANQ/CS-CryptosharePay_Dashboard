@@ -171,20 +171,8 @@ class CryptoSharePay:
 
         return response
 
-    def create_account(self, email, password, confirm_password, first_name, last_name, type, country_id, business_name, business_description):
+    def create_account(self, email, password, confirm_password, first_name, last_name, type, country_id, birthdate, business_name, business_description):
         url = self.BASE + f"/accounts/create/"
-
-        body = {
-            "data": {
-                "email": email.lower(),
-                "password": password,
-                "confirm_password": confirm_password,
-                "first_name": first_name,
-                "last_name": last_name,
-                "type": type,
-                "country_id": country_id
-            }
-        }
 
         body = {
             "data": {
@@ -195,7 +183,8 @@ class CryptoSharePay:
                     "first_name": first_name,
                     "last_name": last_name,
                     "type": type,
-                    "country_id": country_id
+                    "country_id": country_id,
+                    "birthdate": birthdate
                 },
                 "business_info":{ 
                     "name": business_name,
