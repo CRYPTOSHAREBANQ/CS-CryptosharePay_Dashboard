@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import LoginForm, LoginConfirmationForm, BussinessSelectForm, BusinessSignupForm
+from .forms import LoginForm, LoginConfirmationForm, BussinessSelectForm, BusinessSignupForm, UploadDocumentForm
 from django.http import HttpResponse
 from django.template import loader
 
@@ -15,8 +15,9 @@ from utils.cryptosharepay_utils import CryptoSharePayUtils
 
 from core.settings import GITHUB_AUTH
 
-from utils.decorators import is_logged, is_not_logged
+from utils.decorators import is_logged, is_not_logged, is_logged_business
 
+from utils.constants.cryptosharepay_constants import SUPPORTED_COUNTRIES_LIST
 
 def index(request):
     context = {'segment': 'index'}
@@ -26,6 +27,11 @@ def index(request):
 @is_not_logged
 def signup_business(request):
     form = BusinessSignupForm(request.POST or None)
+    context = {
+        'form': form,
+        "msg": None,
+        "countries": SUPPORTED_COUNTRIES_LIST
+    }
 
     if request.method == 'POST':
         if form.is_valid():
@@ -37,15 +43,26 @@ def signup_business(request):
             country_id = form.cleaned_data.get('country_id')
             business_name = form.cleaned_data.get('business_name')
             business_description = form.cleaned_data.get('business_description')
-            business_document = form.cleaned_data.get('business_document')
+            # business_document = form.cleaned_data.get('business_document')
+
+            print("TEST")
+            # return render(request, "accounts/signup_business.html", context)
 
             cryptosharepay_utils = CryptoSharePayUtils()
-            
+            account_creation_response = cryptosharepay_utils.create_account_business(email, password, confirm_password, first_name, last_name, country_id, business_name, business_description)
+            print(account_creation_response)
+
+            if account_creation_response['status'] != 'SUCCESS':
+                context["msg"] = account_creation_response["message"]
+
+                return render(request, "accounts/signup_business.html", context)
+
+            messages.success(request, 'Account created successfully')
+            return redirect('authentication:login')
         else:
             messages.error(request, 'Please correct the error below.')
-    pass
 
-    return render(request, "accounts/signup_business.html")
+    return render(request, "accounts/signup_business.html", context)
 
 @is_not_logged
 def signup_individual(request):
@@ -123,7 +140,8 @@ def login_confirmation(request):
     
     return redirect("/")
 
-@is_logged
+# @is_logged
+@is_logged_business
 def select_business(request):
     form = BussinessSelectForm(request.POST or None)
     
@@ -182,7 +200,33 @@ def select_business(request):
 
             return redirect("/dashboard.html")
 
+@is_logged
+def upload_country_document(request):
+    form = UploadDocumentForm(request.POST, request.FILES)
+    print(request.FILES)
+    if request.method == "GET":
+        return render(request, "accounts/upload_country_document.html", {"form": form})
     
+    elif request.method == "POST":
+        if form.is_valid():
+            pass
+            
+            document_front = form.cleaned_data.get("document_front")
+            document_back = form.cleaned_data.get("document_back")
+
+            print("FRONT")
+            print(request.FILES["document_front"])
+            print(document_front)
+
+            print("BACK")
+            print(document_back)
+        else:
+            print("ERROR")
+            print(form.errors)
+
+    return render(request, "accounts/upload_country_document.html", {"form": form})
+    # UploadDocumentForm
+    pass
 
 
 

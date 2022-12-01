@@ -32,22 +32,26 @@
                                 </p> 
                             </div>
 
-                            <form method="post" action="" class="mt-4">
+                            <form method="post" action="" class="mt-4" enctype="multipart/form-data">
                                 
                                 {% csrf_token %}
 
-                                <div class="mb-4">
-                                    <label class="my-1 me-2" for="selected_business">Business</label>
-                                    <select class="form-select" id="selected_business" aria-label="selected_business" name="selected_business">
-                                        <option selected disabled>Open this menu</option>
-                                        {% for business in  request.session.businesses %}
-                                            <option value="{{ business.business_id }}">{{ business.name }}</option>
-                                        {% endfor %}
-                                    </select>
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="document_front" class="form-label">Please upload your country ID [FRONT]</label>
+                                        <input name="document_front" class="form-control" type="file" id="document_front">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="document_back" class="form-label">Please upload your country ID [BACK]</label>
+                                        <input name="document_back" class="form-control" type="file" id="document_back">
+                                    </div>
                                 </div>
 
                                 <div class="d-grid">
-                                    <button type="submit" name="login" class="btn btn-gray-800">Select Business</button>
+                                    <button type="submit" name="login" class="btn btn-gray-800">Upload document</button>
                                 </div>
                             </form>
 

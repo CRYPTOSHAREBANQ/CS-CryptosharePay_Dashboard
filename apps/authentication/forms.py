@@ -146,6 +146,26 @@ class BusinessSignupForm(forms.Form):
         )
     )
 
+class UploadDocumentForm(forms.Form):
+
+    document_front = forms.FileField(
+        widget=forms.FileInput(
+            attrs={
+                "placeholder": "Upload your document front",
+                "class": "form-control"
+            }
+        )
+    )
+
+    document_back = forms.FileField(
+        widget=forms.FileInput(
+            attrs={
+                "placeholder": "Upload your document back",
+                "class": "form-control"
+            }
+        )
+    )   
+
     # country_document = forms.FileField(
     #     widget=forms.FileInput(
     #         attrs={

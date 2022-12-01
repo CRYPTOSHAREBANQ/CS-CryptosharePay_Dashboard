@@ -110,3 +110,10 @@ class CryptoSharePayUtils:
         post_response = self.post_process_request(response)
 
         return post_response
+
+    def create_account_business(self, email, password, confirm_password, first_name, last_name, country_id, business_name, business_description):
+        response = self.cryptosharepay_client.create_account(email, password, confirm_password, first_name, last_name, "TEST", country_id, business_name, business_description)
+
+        post_response = self.post_process_request(response)
+
+        return post_response

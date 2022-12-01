@@ -166,3 +166,20 @@ SUPPORTED_BLOCKCHAINS = {
 }
 
 SUPPORTED_BLOCKCHAINS_LIST = list(SUPPORTED_BLOCKCHAINS.values())
+
+SUPPORTED_COUNTRIES = {
+    "US": {
+        "code": "US",
+        "name": "United States"
+    },
+    "CO": {
+        "code": "CO",
+        "name": "Colombia"
+    },
+    "MX": {
+        "code": "MX",
+        "name": "Mexico"
+    }
+}
+
+SUPPORTED_COUNTRIES_LIST = list(SUPPORTED_COUNTRIES.values())

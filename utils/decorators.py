@@ -7,9 +7,8 @@ def is_logged(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
 
-        # request.session['wallet_conn'] = True
         if "is_logged" in request.session:
-
+            # print(request.path == "/select-business/")
             if "customer_id" not in request.session:
                 return HttpResponseRedirect("/login/")
             
@@ -17,10 +16,12 @@ def is_logged(function):
                 return HttpResponseRedirect("/login/")
 
             if "businesses" not in request.session:
-                return HttpResponseRedirect('/select-business')
+                if request.path != "/select-business/":
+                    return HttpResponseRedirect("/select-business/")
 
             if "active_business" not in request.session:
-                return HttpResponseRedirect('/select-business')
+                if request.path != "/select-business/":
+                    return HttpResponseRedirect("/select-business/")
 
             if "active_api_key" not in request.session:
                 return HttpResponseRedirect("/login/")
@@ -39,6 +40,17 @@ def is_not_logged(function):
             return HttpResponseRedirect('/dashboard/')
         else:
             return function(request, *args, **kwargs)
+
+    return wrap
+
+def is_logged_business(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        # request.session['wallet_conn'] = True
+        if "is_logged" in request.session:
+            return function(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect('/login/')
 
     return wrap
 
