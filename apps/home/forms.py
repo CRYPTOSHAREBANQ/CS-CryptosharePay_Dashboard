@@ -53,9 +53,10 @@ class CreateTransactionDigitalToCryptoForm(forms.Form):
     # )
 
     withdrawal_address = forms.CharField(
+        required=False,
         widget = forms.TextInput(
             attrs={
-                "placeholder": "Withdrawal Address",
+                "placeholder": "Withdrawal Address (OPTIONAL)",
                 "class": "form-control"
             }
         ),

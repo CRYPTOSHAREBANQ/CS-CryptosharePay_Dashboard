@@ -9,6 +9,7 @@ class CryptoSharePayUtils:
 
     def post_process_request(self, response):
         if response.status_code != 200:
+            print(response._content.decode())
             return json.loads(response._content.decode().replace("'",'"'))
         else:
             return response.json()

@@ -136,7 +136,7 @@ def create_payment_link(request):
             cryptocurrency_code = form.cleaned_data.get("cryptocurrency_code")
             cryptocurrency_blockchain_id = SUPPORTED_CRYPTOCURRENCIES[cryptocurrency_code]["blockchain"]
 
-            withdrawal_address = form.cleaned_data.get("withdrawal_address")
+            withdrawal_address = form.cleaned_data.get("withdrawal_address", None)
 
             # print("description: ", description)
             # print("digital_currency_code: ", digital_currency_code)
