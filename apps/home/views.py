@@ -109,7 +109,7 @@ def create_payment_link(request):
         #     context["cryptocurrencies"] = response_data["cryptocurrencies"]
 
         context["cryptocurrencies"] = SUPPORTED_CRYPTOCURRENCIES_LIST
-
+        print(SUPPORTED_CRYPTOCURRENCIES_LIST)
         # blockchains_response = cryptosharepay_utils.get_blockchains()
         # if blockchains_response["status"] != "SUCCESS":
         #     html_template = loader.get_template('home/page-500.html')

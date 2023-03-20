@@ -204,8 +204,10 @@ def select_business(request):
                 else:
                     api_key = api_key_data["api_key"]
                     request.session["active_api_key"] = api_key
+        else:
+            return render(request, "accounts/select_business.html", context)
 
-            return redirect("home:dashboard")
+        return redirect("home:dashboard")
 
 @is_logged
 def upload_country_document(request):

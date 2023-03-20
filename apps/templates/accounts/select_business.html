@@ -45,8 +45,11 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-
                                 <div class="d-grid">
+                                    <a href="{% url 'authentication:logout' %}" 
+                                       class="btn btn-danger mb-3 mt-3">
+                                        Logout
+                                    </a>
                                     <button type="submit" name="login" class="btn btn-gray-800">Select Business</button>
                                 </div>
                             </form>
