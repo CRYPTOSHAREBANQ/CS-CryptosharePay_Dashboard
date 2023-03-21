@@ -90,7 +90,7 @@
                 <div class="form-group">
                     <div class="mb-4">
                         <label for="payment_link">Payment Link</label>
-                        <input type="text" class="form-control" id="payment_link" aria-describedby="payment_link" placeholder="If you see this, please contact it to support" value="https://site.cryptosharepay.com/transactions/payments/{{ transaction.transaction_id }}" readonly onclick="$('#ClipboardUsername').toast('show'); navigator.clipboard.writeText(this.value);">
+                        <input type="text" class="form-control" id="payment_link" aria-describedby="payment_link" placeholder="If you see this, please contact it to support" value="https://site.cryptosharepay.com/transactions/payments/{{ transaction.transaction_id }}" readonly onclick="navigator.clipboard.writeText(this.value);">
                     </div>
                 </div>
             </div>
