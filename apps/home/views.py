@@ -259,9 +259,55 @@ def create_withdrawal(request):
             context["transaction"] = response_data
 
             return redirect("home:withdrawal_information",context)
+    
+### THIS CODE CHUNK IS REPEATED
+### THIS CODE CHUNK IS REPEATED
+### THIS CODE CHUNK IS REPEATED
+@is_logged
+def send_payment(request):
+    form = CreateWithdrawal(request.POST or None)
 
+    context = {
+        "segment": "send_payment",
+        "form": form,
+        "transaction": {}
+    }
 
+    context["cryptocurrencies"] = SUPPORTED_CRYPTOCURRENCIES_LIST
 
+    if request.method == "GET":
+        return render(request, "transactions/create_transaction_send_payment.html", context)
+
+    elif request.method == "POST":
+        if form.is_valid():
+
+            cryptosharepay_utils = CryptoSharePayUtils(api_key = request.session["active_api_key"])
+
+            cryptocurrency_code = form.cleaned_data.get("cryptocurrency_code")
+            cryptocurrency_blockchain_id = SUPPORTED_CRYPTOCURRENCIES[cryptocurrency_code]["blockchain"]
+            withdrawal_address = form.cleaned_data.get("receiver_address")
+            cryptocurrency_amount = form.cleaned_data.get("cryptocurrency_amount")
+            extra_data = form.cleaned_data.get("extra_data")
+
+            create_transaction_withdrawal_response = cryptosharepay_utils.create_transaction_crypto_withdrawal(
+                cryptocurrency_code,
+                cryptocurrency_blockchain_id,
+                withdrawal_address,
+                cryptocurrency_amount,
+                extra_data
+            )
+
+            if create_transaction_withdrawal_response["status"] != "SUCCESS":
+                html_template = loader.get_template('home/page-500.html')
+                return HttpResponse(html_template.render(context, request))
+            
+            response_data = create_transaction_withdrawal_response["data"]
+            context["transaction"] = response_data
+
+            return redirect("home:withdrawal_information",context)
+### THIS CODE CHUNK IS REPEATED
+### THIS CODE CHUNK IS REPEATED
+### THIS CODE CHUNK IS REPEATED
 
 @is_logged
 def pages(request):

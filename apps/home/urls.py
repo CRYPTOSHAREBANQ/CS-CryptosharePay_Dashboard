@@ -18,7 +18,7 @@ urlpatterns = [
     path("payment-links/create/", views.create_payment_link, name="create_payment_link"),
     path("payment-links/information/<str:transaction_id>", views.payment_link_information, name="payment_link_information"),
 
-    path("send-payment/", views.create_withdrawal, name="send_payment"),
+    path("send-payment/", views.send_payment, name="send_payment"),
     path("balance/", views.balance, name="balance"),
 
     path("withdrawals/", views.create_withdrawal, name="withdrawals"),
