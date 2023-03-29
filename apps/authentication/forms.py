@@ -10,7 +10,7 @@ class LoginForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Username",
+                "placeholder": "Email",
                 "class": "form-control"
             }
         ))
@@ -26,7 +26,7 @@ class LoginConfirmationForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Username",
+                "placeholder": "Email",
                 "class": "form-control"
             }
         ))
