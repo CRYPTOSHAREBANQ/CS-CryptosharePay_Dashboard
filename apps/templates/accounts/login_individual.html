@@ -18,7 +18,7 @@
                         <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3">
-                                    CryptosharePay - Log In
+                                    CryptosharePay - Sign In
                                 </h1>
                                 <br />
                                 <p>
@@ -27,7 +27,7 @@
                                             {{ msg | safe }}
                                         </span>                                        
                                     {% else %}
-                                        Please select your business
+                                        Please type your credentials
                                     {% endif %}                                     
                                 </p> 
                             </div>
@@ -36,21 +36,19 @@
                                 
                                 {% csrf_token %}
 
-                                <div class="mb-4">
-                                    <label class="my-1 me-2" for="selected_business">Business</label>
-                                    <select class="form-select" id="selected_business" aria-label="selected_business" name="selected_business">
-                                        <option selected disabled>Open this menu</option>
-                                        {% for business in  request.session.businesses %}
-                                            <option value="{{ business.business_id }}">{{ business.name }}</option>
-                                        {% endfor %}
-                                    </select>
+                                <!-- Form -->
+                                <div class="form-group mb-4">
+                                    <label for="email">Your Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="fas fa-user-circle"></span>
+                                        </span>
+                                        {{ form.username }}
+                                    </div>  
                                 </div>
+                                <!-- End of Form -->
                                 <div class="d-grid">
-                                    <a href="{% url 'authentication:logout' %}" 
-                                       class="btn btn-danger mb-3 mt-3">
-                                        Logout
-                                    </a>
-                                    <button type="submit" name="login" class="btn btn-gray-800">Select Business</button>
+                                    <button type="submit" name="login_individual" class="btn btn-gray-800">Request One Time Login Code</button>
                                 </div>
                             </form>
 

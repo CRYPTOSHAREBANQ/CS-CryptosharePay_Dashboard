@@ -5,7 +5,8 @@ import os
 
 class CryptoSharePay:
     def __init__(self, api_key = None):
-        self.BASE = "https://api.cryptosharepay.com/v1"
+        # self.BASE = "https://api.cryptosharepay.com/v1"
+        self.BASE = "http://127.0.0.1:9090/v1"
         self.HEADERS = {
         "Content-Type": "application/json"
         }
@@ -93,9 +94,33 @@ class CryptoSharePay:
         response = requests.post(url, headers=headers)
 
         return response
+    def request_individual_login_dashboard_(self, email):
+        url = self.BASE + f"/protected/accounts/request-login-dashboard-individual/"
+
+        headers = {
+            "X-Email": email.lower()
+        }
+
+        response = requests.post(url, headers=headers)
+
+        return response
 
     def login_dashboard(self, email, security_password):
+        print('TEST2')
         url = self.BASE + f"/protected/accounts/login-dashboard/"
+
+        headers = {
+            "X-Email": email.lower(),
+            "X-Security-Password": security_password
+        }
+
+        response = requests.get(url, headers=headers)
+
+        return response
+    
+    def Individual_login_dashboard(self, email, security_password):
+        print('inside Test 2')
+        url = self.BASE + f"/protected/accounts/login-dashboard-individual/"
 
         headers = {
             "X-Email": email.lower(),
@@ -113,6 +138,20 @@ class CryptoSharePay:
             "X-Customer-Id": customer_id,
             "X-Email": email.lower(),
             "X-Business-Id": business_id
+        }
+
+        response = requests.get(url, headers=headers)
+
+        return response
+    
+    
+    def get_api_key_by_user_id(self, customer_id, email):
+        url = self.BASE + f"/api-keys/get-by-user-id/?type=NO_ACCOUNT"
+
+        headers = {
+            "X-Customer-Id": customer_id,
+            "X-Email": email.lower()
+            
         }
 
         response = requests.get(url, headers=headers)
@@ -190,6 +229,39 @@ class CryptoSharePay:
                     "name": business_name,
                     "description": business_description
                 }
+            }
+        }
+
+        response = requests.post(url, headers = self.HEADERS, json = body)
+
+        return response
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    def create_individual_account(self, name , email, phone,country,cedula,birthdate,identity,password):
+        url = self.BASE + f"/accounts/create-individual/"
+
+        body = {
+            "data": {
+                
+                    "email": email.lower(),
+                    "password": password,
+                    "cedula":cedula,
+                    "full_name": name,
+                    "type":"NO_ACCOUNT",
+                    "phone": phone,
+                    "country_id": country,
+                    "birthdate": birthdate,
+                    "identity":identity,
+                    "business_info":{}
+                
+                
             }
         }
 

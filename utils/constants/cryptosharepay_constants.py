@@ -168,10 +168,6 @@ SUPPORTED_BLOCKCHAINS = {
 SUPPORTED_BLOCKCHAINS_LIST = list(SUPPORTED_BLOCKCHAINS.values())
 
 SUPPORTED_COUNTRIES = {
-    "US": {
-        "code": "US",
-        "name": "United States"
-    },
     "CO": {
         "code": "CO",
         "name": "Colombia"
@@ -179,6 +175,46 @@ SUPPORTED_COUNTRIES = {
     "MX": {
         "code": "MX",
         "name": "Mexico"
+    },
+    "AU": {
+        "code": "AU",
+        "name": "Australia"
+    },
+    "AT":{
+        "code": "AT",
+        "name": "Austria"
+    },
+    "BE":{
+        "code": "BE",
+        "name": "Belgium"
+    },
+    "BR":{
+        "code": "CA",
+        "name": "Canada"
+    },
+    "CL":{
+        "code": "CZ",
+        "name": "Czech Republic"
+    },
+    "DK":{
+        "code": "SV",
+        "name": "El Salvador"
+    },
+    "EE":{
+        "code": "EE",
+        "name": "Estonia"
+    },
+    "FI":{
+        "code": "FI",
+        "name": "Finland"
+    },
+    "FR":{
+        "code": "FR",
+        "name": "France"
+    },
+    "DE":{
+        "code": "DE",
+        "name": "Germany"
     }
 }
 
