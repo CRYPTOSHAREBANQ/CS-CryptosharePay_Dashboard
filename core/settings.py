@@ -83,11 +83,20 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "cryptosharepay",
+        'USER': "BanqUserAdmin",
+        'PASSWORD': "Ethereum123",
+        'HOST': "cryptosharepay-dashboard-db1.cbgd6lobri5z.us-east-1.rds.amazonaws.com",
+        'PORT': '5432'
     }
 }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'mydatabase',
+    # }
 
 # if os.environ.get('DB_ENGINE') and os.environ.get('DB_ENGINE') == "mysql":
 #     DATABASES = { 
