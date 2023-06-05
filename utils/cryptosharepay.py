@@ -146,7 +146,7 @@ class CryptoSharePay:
     
     
     def get_api_key_by_user_id(self, customer_id, email):
-        url = self.BASE + f"/api-keys/get-by-user-id/?type=NO_ACCOUNT"
+        url = self.BASE + f"/api-keys/get-by-user-id/?type=PRODUCTION"
 
         headers = {
             "X-Customer-Id": customer_id,
@@ -244,7 +244,7 @@ class CryptoSharePay:
     
     
     
-    def create_individual_account(self, name , email, phone,country,cedula,birthdate,identity,password):
+    def create_individual_account(self, name , email, phone,type,country,cedula,birthdate,identity,password):
         url = self.BASE + f"/accounts/create-individual/"
 
         body = {
