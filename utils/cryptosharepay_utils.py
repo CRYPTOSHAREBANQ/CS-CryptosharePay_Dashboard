@@ -149,7 +149,7 @@ class CryptoSharePayUtils:
     
     
     def create_indivisual_user(self,name , email, phone,country,cedula,birthdate,identity,password):
-        response = self.cryptosharepay_client.create_individual_account(name , email, phone,country,cedula,birthdate,identity,password)
+        response = self.cryptosharepay_client.create_individual_account(name , email, phone,"TEST",country,cedula,birthdate,identity,password)
 
         post_response = self.post_process_request(response)
 

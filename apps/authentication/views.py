@@ -269,7 +269,7 @@ def Individual_login_confirmation(request):
 @is_logged_business
 def select_business(request):
     # request.session.clear
-    if request.session["type"] != "individual":
+    # if request.session["type"] != "individual":
         print(request.session["account_email"])
         print('customer id ')
         form = BussinessSelectForm(request.POST or None)
@@ -330,45 +330,45 @@ def select_business(request):
                 return render(request, "accounts/select_business.html", context)
 
         return redirect("home:dashboard")
-    else:
+    # else:
         
-        if request.method == "GET":
-            form = BussinessSelectForm(request.POST or None)
+    #     if request.method == "GET":
+    #         form = BussinessSelectForm(request.POST or None)
         
-            msg = None
+    #         msg = None
 
-            context = {
-            "form": form, 
-            "msg": msg, 
-            "businesses": []
-        }
-            cryptosharepay_utils = CryptoSharePayUtils()
-            print(request.session["customer_id"])
-            print(request.session["account_email"])
-            response_api_key = cryptosharepay_utils.get_api_key_by_user_id(
-            request.session["customer_id"],
-            request.session["account_email"],
+    #         context = {
+    #         "form": form, 
+    #         "msg": msg, 
+    #         "businesses": []
+    #     }
+    #         cryptosharepay_utils = CryptoSharePayUtils()
+    #         print(request.session["customer_id"])
+    #         print(request.session["account_email"])
+    #         response_api_key = cryptosharepay_utils.get_api_key_by_user_id(
+    #         request.session["customer_id"],
+    #         request.session["account_email"],
             
                     
-                )
+    #             )
             
-            if response_api_key["status"] != "SUCCESS":
+    #         if response_api_key["status"] != "SUCCESS":
                 
-                html_template = loader.get_template('home/page-500.html')
-                # return HttpResponse(html_template.render({"form": form, "msg": msg}, request))
-            else:
-                print('inside else ')
-                response_data = response_api_key["data"]
-                api_key_data = response_data["api_key"]
-                if api_key_data is None:
-                    msg = "No API Key found for this business"
-                    return render(request, "accounts/login_individual.html")
-                else:
-                    api_key = api_key_data["api_key"]
-                    request.session["active_api_key"] = api_key
-        else:
-            return render(request, "accounts/login_individual.html")    
-        return redirect("home:dashboard")
+    #             html_template = loader.get_template('home/page-500.html')
+    #             # return HttpResponse(html_template.render({"form": form, "msg": msg}, request))
+    #         else:
+    #             print('inside else ')
+    #             response_data = response_api_key["data"]
+    #             api_key_data = response_data["api_key"]
+    #             if api_key_data is None:
+    #                 msg = "No API Key found for this business"
+    #                 return render(request, "accounts/login_individual.html")
+    #             else:
+    #                 api_key = api_key_data["api_key"]
+    #                 request.session["active_api_key"] = api_key
+    #     else:
+    #         return render(request, "accounts/login_individual.html")    
+        # return redirect("home:dashboard")
 
 @is_logged
 def upload_country_document(request):
