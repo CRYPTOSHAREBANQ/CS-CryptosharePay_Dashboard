@@ -18,7 +18,7 @@ from utils.cryptosharepay_utils import CryptoSharePayUtils
 from .forms import CreateTransactionDigitalToCryptoForm, CreateWithdrawal
 
 
-@is_logged
+# @is_logged
 def index(request):
     context = {'segment': 'index'}
 

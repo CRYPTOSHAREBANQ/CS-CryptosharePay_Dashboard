@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import LoginForm, LoginConfirmationForm, BussinessSelectForm, BusinessSignupForm, UploadDocumentForm
+from .forms import LoginForm, LoginConfirmationForm, Login_individual_Form,BussinessSelectForm, BusinessSignupForm, UploadDocumentForm
 from django.http import HttpResponse
 from django.template import loader
 
@@ -73,9 +73,43 @@ def signup_business(request):
 
 @is_not_logged
 def signup_individual(request):
-    pass
 
-    return render(request, "accounts/signup_individual.html")
+    context = {   
+        "countries": SUPPORTED_COUNTRIES_LIST
+    }
+
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        country = request.POST.get('country')
+        cedula = request.POST.get('cedula')
+        birthdate = request.POST.get('birthday')
+        identity = request.POST.get('identity')
+        password = request.POST.get('password')
+        cryptosharepay_utils = CryptoSharePayUtils()
+        birthdate = datetime.strptime(birthdate, '%m/%d/%Y').strftime('%m/%d/%Y')
+
+        account_creation_response = cryptosharepay_utils.create_indivisual_user(name , email, phone,country,cedula,birthdate,identity,password)
+
+        if account_creation_response['status'] != 'SUCCESS':
+            
+
+            return render(request, "accounts/signup_individual.html")
+
+        messages.success(request, 'Account created successfully')
+        
+        return redirect('authentication:login_individual')
+    else:
+        print("ERROR")
+        messages.error(request, 'Please correct the error below.')
+
+    return render(request, "accounts/signup_individual.html",context)
+
+
+
+
 
 @is_not_logged
 def login_view(request):
@@ -109,6 +143,47 @@ def login_view(request):
             msg = 'Error validating the form'
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
+
+
+@is_not_logged
+def Individual_login_view(request):
+    form = Login_individual_Form(request.POST or None)
+
+    msg = None
+
+    if request.method == "POST":
+
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+
+            cryptosharepay_utils = CryptoSharePayUtils()
+            response = cryptosharepay_utils.request_individual_login_dashboard(username)
+
+            if response["status"] != "SUCCESS":
+                # messages.info(request, "Invalid credentials")
+                msg = 'Invalid credentials'
+            else:
+                login_confirmation_form = LoginConfirmationForm(
+                    initial={
+                        "username": username
+                    }
+                )
+
+                return render(request, "accounts/login_confirmation_individual.html", {"form": login_confirmation_form, "msg": msg})
+                # return redirect("/")
+
+            
+        else:
+            msg = 'Error validating the form'
+
+    return render(request, "accounts/login_individual.html", {"form": form, "msg": msg})
+
+
+
+
+
+
+
 
 @is_not_logged
 def login_confirmation(request):
@@ -147,67 +222,153 @@ def login_confirmation(request):
     
     return redirect("/")
 
+
+
+@is_not_logged
+def Individual_login_confirmation(request):
+
+    # if request.method == "GET":
+    #     return redirect("authentication:login")
+
+    form = LoginConfirmationForm(request.POST or None)
+
+    msg = None
+
+    if form.is_valid():
+        username = form.cleaned_data.get("username")
+        security_password = form.cleaned_data.get("security_password")
+
+        cryptosharepay_utils = CryptoSharePayUtils()
+        response = cryptosharepay_utils.login_dashboard_individual(username, security_password)
+
+        if response["status"] != "SUCCESS":
+            msg = response["message"]
+            return render(request, "accounts/signup_individual.html", {"form": form, "msg": msg})
+
+        else:
+            data = response["data"]
+
+            
+            account_customer_id = data["customer_id"]
+
+            request.session["account_email"] = username
+            request.session["customer_id"] = account_customer_id
+            request.session["is_logged"] = True
+            request.session["type"] = "individual"
+
+        
+        return redirect("home:dashboard")
+        # return redirect("/dashboard.html")
+    
+    return redirect("/")
+
+
+
+
 # @is_logged
 @is_logged_business
 def select_business(request):
-    form = BussinessSelectForm(request.POST or None)
-    
-    msg = None
-
-    context = {
-        "form": form, 
-        "msg": msg, 
-        "businesses": []
-    }
-
-    if request.method == "GET":
-        cryptosharepay_utils = CryptoSharePayUtils()
-        response_businesses = cryptosharepay_utils.get_businesses(request.session["account_email"], request.session["customer_id"])
-
-        if response_businesses["status"] != "SUCCESS":
-            msg = response_businesses["message"]
-            html_template = loader.get_template('home/page-500.html')
-            return HttpResponse(html_template.render({"form": form, "msg": msg}, request))
-        else:
-            data_businesses = response_businesses["data"]
-
-            businesses = data_businesses["businesses"]
-
-            # request.session["active_business"] = None
-            request.session["businesses"] = businesses
-            context["businesses"] = businesses
+    # request.session.clear
+    # if request.session["type"] != "individual":
+        print(request.session["account_email"])
+        print('customer id ')
+        form = BussinessSelectForm(request.POST or None)
         
-        return render(request, "accounts/select_business.html", context)
-    
-    elif request.method == "POST":
-        if form.is_valid():
-            selected_business = form.cleaned_data.get("selected_business")
+        msg = None
 
-            request.session["active_business"] = selected_business
+        context = {
+            "form": form, 
+            "msg": msg, 
+            "businesses": []
+        }
 
+        if request.method == "GET":
             cryptosharepay_utils = CryptoSharePayUtils()
+            response_businesses = cryptosharepay_utils.get_businesses(request.session["account_email"], request.session["customer_id"])
 
-            response_api_key = cryptosharepay_utils.get_api_key_by_business_id(
-                request.session["customer_id"],
-                request.session["account_email"],
-                request.session["active_business"]
-            )
-            if response_api_key["status"] != "SUCCESS":
+            if response_businesses["status"] != "SUCCESS":
+                msg = response_businesses["message"]
                 html_template = loader.get_template('home/page-500.html')
                 return HttpResponse(html_template.render({"form": form, "msg": msg}, request))
             else:
-                response_data = response_api_key["data"]
-                api_key_data = response_data["api_key"]
-                if api_key_data is None:
-                    msg = "No API Key found for this business"
-                    return render(request, "accounts/select_business.html", {"form": form, "msg": msg, "businesses": businesses})
-                else:
-                    api_key = api_key_data["api_key"]
-                    request.session["active_api_key"] = api_key
-        else:
+                data_businesses = response_businesses["data"]
+
+                businesses = data_businesses["businesses"]
+
+                # request.session["active_business"] = None
+                request.session["businesses"] = businesses
+                context["businesses"] = businesses
+            
             return render(request, "accounts/select_business.html", context)
+        
+        elif request.method == "POST":
+            if form.is_valid():
+                selected_business = form.cleaned_data.get("selected_business")
+
+                request.session["active_business"] = selected_business
+
+                cryptosharepay_utils = CryptoSharePayUtils()
+
+                response_api_key = cryptosharepay_utils.get_api_key_by_business_id(
+                    request.session["customer_id"],
+                    request.session["account_email"],
+                    request.session["active_business"]
+                )
+                if response_api_key["status"] != "SUCCESS":
+                    html_template = loader.get_template('home/page-500.html')
+                    return HttpResponse(html_template.render({"form": form, "msg": msg}, request))
+                else:
+                    response_data = response_api_key["data"]
+                    api_key_data = response_data["api_key"]
+                    if api_key_data is None:
+                        msg = "No API Key found for this business"
+                        return render(request, "accounts/select_business.html", {"form": form, "msg": msg, "businesses": businesses})
+                    else:
+                        api_key = api_key_data["api_key"]
+                        request.session["active_api_key"] = api_key
+            else:
+                return render(request, "accounts/select_business.html", context)
 
         return redirect("home:dashboard")
+    # else:
+        
+    #     if request.method == "GET":
+    #         form = BussinessSelectForm(request.POST or None)
+        
+    #         msg = None
+
+    #         context = {
+    #         "form": form, 
+    #         "msg": msg, 
+    #         "businesses": []
+    #     }
+    #         cryptosharepay_utils = CryptoSharePayUtils()
+    #         print(request.session["customer_id"])
+    #         print(request.session["account_email"])
+    #         response_api_key = cryptosharepay_utils.get_api_key_by_user_id(
+    #         request.session["customer_id"],
+    #         request.session["account_email"],
+            
+                    
+    #             )
+            
+    #         if response_api_key["status"] != "SUCCESS":
+                
+    #             html_template = loader.get_template('home/page-500.html')
+    #             # return HttpResponse(html_template.render({"form": form, "msg": msg}, request))
+    #         else:
+    #             print('inside else ')
+    #             response_data = response_api_key["data"]
+    #             api_key_data = response_data["api_key"]
+    #             if api_key_data is None:
+    #                 msg = "No API Key found for this business"
+    #                 return render(request, "accounts/login_individual.html")
+    #             else:
+    #                 api_key = api_key_data["api_key"]
+    #                 request.session["active_api_key"] = api_key
+    #     else:
+    #         return render(request, "accounts/login_individual.html")    
+        # return redirect("home:dashboard")
 
 @is_logged
 def upload_country_document(request):

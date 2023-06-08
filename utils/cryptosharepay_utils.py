@@ -9,7 +9,7 @@ class CryptoSharePayUtils:
 
     def post_process_request(self, response):
         if response.status_code != 200:
-            print(response._content.decode())
+            # print(response._content.decode())
             return json.loads(response._content.decode().replace("'",'"'))
         else:
             return response.json()
@@ -69,9 +69,27 @@ class CryptoSharePayUtils:
         post_response = self.post_process_request(response)
 
         return post_response
+    
+    
+    def request_individual_login_dashboard(self, email):
+        response = self.cryptosharepay_client.request_individual_login_dashboard_(email)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
 
     def login_dashboard(self, email, security_password):
+        print('TEST1')
         response = self.cryptosharepay_client.login_dashboard(email, security_password)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+    
+    
+    def login_dashboard_individual(self, email, security_password):
+        print('inside Test1')
+        response = self.cryptosharepay_client.Individual_login_dashboard(email, security_password)
 
         post_response = self.post_process_request(response)
 
@@ -79,6 +97,14 @@ class CryptoSharePayUtils:
 
     def get_api_key_by_business_id(self, customer_id, email, business_id):
         response = self.cryptosharepay_client.get_api_key_by_business_id(customer_id, email, business_id)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+    
+    
+    def get_api_key_by_user_id(self, customer_id, email):
+        response = self.cryptosharepay_client.get_api_key_by_user_id(customer_id, email)
 
         post_response = self.post_process_request(response)
 
@@ -114,6 +140,16 @@ class CryptoSharePayUtils:
 
     def create_account_business(self, email, password, confirm_password, first_name, last_name, country_id, birthdate, business_name, business_description):
         response = self.cryptosharepay_client.create_account(email, password, confirm_password, first_name, last_name, "TEST", country_id, birthdate, business_name, business_description)
+
+        post_response = self.post_process_request(response)
+
+        return post_response
+    
+    
+    
+    
+    def create_indivisual_user(self,name , email, phone,country,cedula,birthdate,identity,password):
+        response = self.cryptosharepay_client.create_individual_account(name , email, phone,"TEST",country,cedula,birthdate,identity,password)
 
         post_response = self.post_process_request(response)
 

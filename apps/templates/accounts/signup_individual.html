@@ -30,13 +30,14 @@
                             -Full Legal Name
                             -Picture of Country ID or Drivers License 
                             -->
-
-                            <form action="#" class="mt-4">
+ 
+                            <form method="post" class="mt-4" onsubmit="return validateForm()">
                                 <!-- Form -->
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <div class="mb-4">
                                         <label for="legal_name">Full legal name</label>
-                                        <input type="text" class="form-control" id="legal_name" aria-describedby="legal_name" placeholder="Your full legal name">
+                                        <input type="text" name="name" class="form-control" id="legal_name" aria-describedby="legal_name" placeholder="Your full legal name">
                                     </div>
                                 </div>
 
@@ -46,9 +47,26 @@
                                         <span class="input-group-text" id="basic-addon1">
                                             <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
                                         </span>
-                                        <input type="email" class="form-control" placeholder="example@company.com" id="email" autofocus required>
+                                        <input type="email" name="email" class="form-control" placeholder="example@company.com" id="email" autofocus required>
                                     </div>  
                                 </div>
+
+
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="identity_document_id">Phone No #</label>
+                                        <input type="number" class="form-control" name="phone" id="identity_document_id" aria-describedby="identity_document_id" placeholder="Your country's identity document number">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="mb-4">
+                                        <label for="legal_name">cedula</label>
+                                        <input type="text" name="cedula" class="form-control" id="legal_name" aria-describedby="legal_name" placeholder="Your full legal name">
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group">
                                     <div class="mb-4">
@@ -56,7 +74,7 @@
                                         <select class="form-select" id="country" aria-label="Country" name="country">
                                             <option selected disabled>Open this menu</option>
                                             {% for country in countries %}
-                                                <option value="{{ country.code }}">{{ country.name }}</option>
+                                                <option value="{{ country.code }}" name="country">{{ country.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -69,23 +87,23 @@
                                             <span class="input-group-text">
                                                 <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                             </span>
-                                            <input data-datepicker="" class="form-control" id="birthday" type="text" placeholder="dd/mm/yyyy" required>                                               
+                                            <input data-datepicker="" class="form-control" id="birthday" name="birthday" type="text" placeholder="dd/mm/yyyy" required>                                               
                                         </div>
                                     </div>
                                 </div>
                                 
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="mb-4">
                                         <label for="identity_document" class="form-label">Please upload your country ID</label>
                                         <input name="identity_document" class="form-control" type="file" id="identity_document">
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <div class="mb-4">
                                         <label for="identity_document_id">Identity Document #</label>
-                                        <input type="number" class="form-control" id="identity_document_id" aria-describedby="identity_document_id" placeholder="Your country's identity document number">
+                                        <input type="number" class="form-control" name="identity" id="identity_document_id" aria-describedby="identity_document_id" placeholder="Your country's identity document number">
                                     </div>
                                 </div>
                                 <!-- End of Form -->
@@ -97,7 +115,7 @@
                                             <span class="input-group-text" id="basic-addon2">
                                                 <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                                             </span>
-                                            <input type="password" placeholder="Password" class="form-control" id="password" required>
+                                            <input type="password" name="password"  placeholder="Password" class="form-control" id="password" required>
                                         </div>  
                                     </div>
                                     <!-- End of Form -->
@@ -109,6 +127,7 @@
                                                 <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                                             </span>
                                             <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" required>
+                                            <span id="password_error" style="color: red;"></span>
                                         </div>  
                                     </div>
                                     <!-- End of Form -->
@@ -146,6 +165,23 @@
     </main>
 
 {% endblock content %}
+
+
+<script>
+    function validateForm() {
+      const passwordField = document.getElementById('password');
+      const confirmPasswordField = document.getElementById('confirm_password');
+      const passwordError = document.getElementById('password_error');
+  
+      if (passwordField.value !== confirmPasswordField.value) {
+        passwordError.textContent = "Passwords do not match";
+        return false; // Prevent form submission
+      } else {
+        passwordError.textContent = "";
+        return true; // Allow form submission
+      }
+    }
+  </script>
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}

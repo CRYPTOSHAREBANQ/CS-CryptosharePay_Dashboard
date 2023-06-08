@@ -14,6 +14,18 @@ class LoginForm(forms.Form):
                 "class": "form-control"
             }
         ))
+    
+    
+    
+    
+class Login_individual_Form(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Email",
+                "class": "form-control"
+            }
+        ))
     # password = forms.CharField(
     #     widget=forms.PasswordInput(
     #         attrs={
@@ -30,6 +42,16 @@ class LoginConfirmationForm(forms.Form):
                 "class": "form-control"
             }
         ))
+    
+    
+# class Individual_LoginConfirmationForm(forms.Form):
+#     username = forms.CharField(
+#         widget=forms.TextInput(
+#             attrs={
+#                 "placeholder": "Email",
+#                 "class": "form-control"
+#             }
+#         ))
 
     # password = forms.CharField(
     #     widget=forms.PasswordInput(
